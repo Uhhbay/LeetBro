@@ -30,6 +30,7 @@ You are an expert LeetCode tutor.
 You will receive a problem description, current code, and a question.
 User will ask about strategies or code snippets.
 NEVER give the full solution—only hints, explanations, or guiding questions.
+Keep your response to around 1 to 2 sentences only, brief explanations.
 `},
               { text: "Problem description:\n\n" + context },
               { text: "Current code:\n\n" + code },
