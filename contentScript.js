@@ -105,7 +105,33 @@
   }
 
   function speak(txt) {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(txt));
+    const utterance = new SpeechSynthesisUtterance(txt);
+
+    function setVoiceAndSpeak() {
+      const voices = window.speechSynthesis.getVoices();
+
+      const preferredVoice = voices.find(v => 
+        v.lang === 'en-GB' && v.name.toLowerCase().includes('male')
+      );
+
+      const fallbackVoice = voices.find(v => v.lang === 'en-GB');
+
+      utterance.voice = preferredVoice || fallbackVoice;
+      utterance.pitch = 0.6;
+      utterance.rate = 1;
+      utterance.volume = 0.5;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // if voices loaded, speak imm:
+    if (window.speechSynthesis.getVoices().length > 0) {
+      setVoiceAndSpeak();
+    } else {
+      window.speechSynthesis.onvoiceschanged = () => {
+        setVoiceAndSpeak();
+      };
+    }
   }
 
   function sendToBackground(data) {
