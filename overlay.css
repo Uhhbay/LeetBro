@@ -1,0 +1,29 @@
+#leetspeak-overlay {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-family: sans-serif;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+  }
+  #leetspeak-overlay .header {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  #leetspeak-overlay .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 8px;
+  }
+  #leetspeak-overlay .status {
+    font-size: 0.9em;
+    opacity: 0.7;
+  }
+  
