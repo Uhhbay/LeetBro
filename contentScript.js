@@ -1,10 +1,9 @@
-// --- inject overlay ---
 const overlay = document.createElement('div');
-overlay.id = 'leetspeak-overlay';
+overlay.id = 'leetbro-overlay';
 overlay.innerHTML = `
-  <div class="header">LeetSpeak Assistant</div>
+  <div class="header">LeetBro</div>
   <div class="messages"></div>
-  <div class="status">Say “hey gemini” to start</div>
+  <div class="status">Say "Hey Leetbro" to start</div>
 `;
 document.body.appendChild(overlay);
 
@@ -28,7 +27,7 @@ recog.onresult = async (evt) => {
     .join('')
     .toLowerCase();
 
-  if (!wakeMode && interimTranscript.includes('hey gemini')) {
+  if (!wakeMode && interimTranscript.includes('Hey LeetBro')) {
     wakeMode = true;
     statusDiv.textContent = '🎙 Listening for your question...';
     interimTranscript = '';
@@ -46,7 +45,7 @@ recog.onresult = async (evt) => {
     const answer = await sendToBackground(query);
     appendMessage('Gemini', answer);
     speak(answer);
-    statusDiv.textContent = 'Say “hey gemini” to start';
+    statusDiv.textContent = 'Say “Hey LeetBro” to start';
   }
 };
 
