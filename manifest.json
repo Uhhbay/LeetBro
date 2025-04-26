@@ -1,28 +1,31 @@
 {
-    "manifest_version": 3,
-    "name": "LeetBro",
-    "version": "1.0",
-    "description": "Voice-activated LLM assistant for LeetCode reasoning and hints.",
-    "permissions": [
-      "storage",
-      "activeTab"
-    ],
-    "host_permissions": [
-      "https://api.openai.com/*"
-    ],
-    "content_scripts": [
-      {
-        "matches": ["*://leetcode.com/problems/*"],
-        "js": ["contentScript.js"],
-        "css": ["overlay.css"],
-        "run_at": "document_idle"
-      }
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "index.html"
+  "manifest_version": 3,
+  "name": "LeetBro",
+  "version": "1.0",
+  "description": "Voice-activated LLM assistant for LeetCode reasoning and hints.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "*://*.leetcode.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://leetcode.com/problems/*"],
+      "js": ["contentScript.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
     }
-  }
-  
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["*://*.leetcode.com/*"]
+    }
+  ]
+}
