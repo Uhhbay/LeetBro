@@ -2,7 +2,6 @@
 import config from './config.js';
 
 const GEMINI_API_KEY = config.API_KEY;
-console.log(GEMINI_API_KEY);
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type !== 'query') return;

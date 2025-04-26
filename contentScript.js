@@ -7,7 +7,7 @@
   overlay.innerHTML = `
     <div class="header">LeetBro</div>
     <div class="messages"></div>
-    <div class="status">Say “hey bro” to start</div>
+    <div class="status">Say “Hey Bro” to start</div>
     <div class="debug"></div>
   `;
   document.body.appendChild(overlay);
@@ -55,7 +55,7 @@
         // Stop listening while we fetch
         recog.stop();
 
-        const query = text.replace('hey bro', '').trim();
+        const query = text.replace('Hey Bro', '').trim();
         appendMessage('You', query);
         statusDiv.textContent = '🤖 Thinking...';
 
@@ -78,7 +78,7 @@
 
         // Reset UI and mode, then restart recog
         wakeMode = false;
-        statusDiv.textContent = 'Say “hey bro” to start';
+        statusDiv.textContent = 'Say “Hey Bro” to start';
         setTimeout(() => recog.start(), 500);
         return;
       }
