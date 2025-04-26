@@ -6,7 +6,7 @@
   overlay.innerHTML = `
     <div class="header">LeetBro</div>
     <div class="messages"></div>
-    <div class="status">Say “hey bro” to start</div>
+    <div class="status">Say “Hey Bro” to start</div>
     <div class="debug"></div>
   `;
   document.body.appendChild(overlay);
@@ -44,6 +44,9 @@
 
     const last = evt.results[evt.results.length - 1];
     if (wakeMode && last.isFinal) {
+      // stop listening after user asks
+      recog.stop();
+
       const query = interimTranscript.trim();
       interimTranscript = '';
       wakeMode = false;
@@ -69,6 +72,10 @@
       appendMessage('Gemini', answer);
       setTimeout(() => speak(answer), 100);
       statusDiv.textContent = 'Say “hey bro” to start';
+
+      setTimeout(() => {
+        recog.start(); // restart listening after respond
+      }, 1000);
     }
   };
 
