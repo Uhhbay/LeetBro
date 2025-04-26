@@ -2,42 +2,52 @@
 import config from './config.js';
 
 const GEMINI_API_KEY = config.API_KEY;
-console.log(GEMINI_API_KEY)
+console.log(GEMINI_API_KEY);
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type !== 'query') return;
 
-  const { prompt, context, code } = msg;
+  // We need to handle the async operation
+  handleQuery(msg, sendResponse);
+  return true; // keep channel open for async response
+});
 
-  fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${GEMINI_API_KEY}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{
-          parts: [
-            { text: `
+// Separate async function to handle the query
+async function handleQuery(msg, sendResponse) {
+  try {
+    const { prompt, context, code } = msg;
+    console.log("getting leet resp")
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: `
 You are an expert LeetCode tutor.
 You will receive a problem description, current code, and a question.
 User will ask about strategies or code snippets.
 NEVER give the full solution—only hints, explanations, or guiding questions.
 `},
-            { text: "Problem description:\n\n" + context },
-            { text: "Current code:\n\n" + code },
-            { text: "User's question:\n\n" + prompt }
-          ]
-        }]
-      })
-    }
-  )
-    .then(r => r.json())
-    .then(data => {
-      const answer = data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                     '⚠️ Error: no response';
-      sendResponse({ answer });
-    })
-    .catch(err => sendResponse({ answer: '⚠️ Error: ' + err.message }));
-
-  return true; // keep channel open
-});
+              { text: "Problem description:\n\n" + context },
+              { text: "Current code:\n\n" + code },
+              { text: "User's question:\n\n" + prompt }
+            ]
+          }]
+        })
+      }
+    );
+    
+    const data = await response.json();
+    console.log("leet response", data)
+    
+    const answer = data.candidates?.[0]?.content?.parts?.[0]?.text ||
+                  '⚠️ Error: no response';
+    
+    sendResponse({ answer });
+  } catch (err) {
+    sendResponse({ answer: '⚠️ Error: ' + err.message });
+  }
+}
