@@ -1,4 +1,4 @@
-***LeetBro
-**By: Abhay Singh, John Vu, Tony Yeon
+# LeetBro
+## By: Abhay Singh, John Vu, Tony Yeon
 
-AI Pair Programmer
+### AI Pair Programmer
