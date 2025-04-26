@@ -11,6 +11,9 @@
     "https://generativelanguage.googleapis.com/*",
     "*://*.leetcode.com/*"
   ],
+  "icons": {
+    "128": "logo.png"
+  },
   "content_scripts": [
     {
       "matches": ["*://leetcode.com/problems/*"],
@@ -25,7 +28,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["injected.js"],
+      "resources": ["injected.js", "logo-transparent.png"],
       "matches": ["*://*.leetcode.com/*"]
     }
   ]

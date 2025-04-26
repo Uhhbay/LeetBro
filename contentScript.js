@@ -5,10 +5,12 @@
   const overlay = document.createElement('div');
   overlay.id = 'leetbro-overlay';
   overlay.innerHTML = `
-    <div class="header">LeetBro</div>
+    <div class="header">
+      <img src="${chrome.runtime.getURL('logo-transparent.png')}" alt="LeetBro Icon" class="leetbro-icon">
+      <span>LeetBro</span>
+    </div>
     <div class="messages"></div>
     <div class="status">Say “Hey Bro” to start</div>
-    <div class="debug"></div>
   `;
   document.body.appendChild(overlay);
 
@@ -34,7 +36,6 @@
       .filter(r => !r.isFinal)
       .map(r => r[0].transcript)
       .join('');
-    debugDiv.textContent = interim;
 
     // Process only final results
     for (let i = evt.resultIndex; i < evt.results.length; i++) {
@@ -47,6 +48,13 @@
       if (!wakeMode && text.includes('hey bro')) {
         wakeMode = true;
         statusDiv.textContent = '🎙 Listening for your question...';
+
+        // glow:
+        const leetbroIcon = overlay.querySelector('.leetbro-icon');
+        if (leetbroIcon) {
+          leetbroIcon.classList.add('glow');
+        }
+
         return;  // wait for the NEXT final result
       }
 
@@ -120,6 +128,14 @@
       utterance.pitch = 0.6;
       utterance.rate = 1;
       utterance.volume = 0.5;
+
+      // finished talking:
+      utterance.onend = () => {
+        const leetbroIcon = document.querySelector('.leetbro-icon');
+        if (leetbroIcon) {
+          leetbroIcon.classList.remove('glow');
+        }
+      };
 
       window.speechSynthesis.speak(utterance);
     }
