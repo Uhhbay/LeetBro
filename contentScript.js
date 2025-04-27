@@ -6,13 +6,29 @@
   overlay.id = 'leetbro-overlay';
   overlay.innerHTML = `
     <div class="header">
-      <img src="${chrome.runtime.getURL('logo-transparent.png')}" alt="LeetBro Icon" class="leetbro-icon">
-      <span>LeetBro</span>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <img src="${chrome.runtime.getURL('logo-transparent.png')}" alt="LeetBro Icon" class="leetbro-icon">
+        <span>LeetBro</span>
+      </div>
+      <button id="minimize-btn">-</button>
     </div>
     <div class="messages"></div>
     <div class="status">Say “Hey Bro” to start</div>
   `;
   document.body.appendChild(overlay);
+
+  // min button
+  const minBtn = overlay.querySelector('#minimize-btn');
+  minBtn.addEventListener('click', () => {
+    const isHidden = overlay.classList.toggle('minimized');
+
+    if (isHidden) {
+      minBtn.textContent = '+';
+
+    } else {
+      minBtn.textContent = '-';
+    }
+  });
 
   const messagesDiv = overlay.querySelector('.messages');
   const statusDiv   = overlay.querySelector('.status');
