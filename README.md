@@ -9,3 +9,5 @@ To install on google chrome:
 3. Press on load unpacked
 4. Load the whole folder
 5. It should be activated, when you go to leetcode it should just be there. Voice activate by saying Hey Bro
+
+You have to use your own gemini AI API key though, I'm not providing free ones for yall lel
